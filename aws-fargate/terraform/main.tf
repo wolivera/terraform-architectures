@@ -41,12 +41,11 @@ module "ecr" {
   environment = var.environment
 }
 
-
 module "secrets" {
   source              = "./secrets"
   name                = var.name
   environment         = var.environment
-  application-secrets = var.application_secrets
+  application_secrets = var.application_secrets
 }
 
 module "ecs" {

@@ -66,11 +66,6 @@ resource "aws_iam_role_policy_attachment" "ecs-task-execution-role-policy-attach
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
 
-resource "aws_iam_role_policy_attachment" "ecs-task-role-policy-attachment" {
-  role       = aws_iam_role.ecs_task_role.name
-  policy_arn = aws_iam_policy.dynamodb.arn
-}
-
 resource "aws_iam_role_policy_attachment" "ecs-task-role-policy-attachment-for-secrets" {
   role       = aws_iam_role.ecs_task_execution_role.name
   policy_arn = aws_iam_policy.secrets.arn
@@ -95,7 +90,7 @@ resource "aws_ecs_task_definition" "main" {
   task_role_arn            = aws_iam_role.ecs_task_role.arn
   container_definitions = jsonencode([{
     name        = "${var.name}-container-${var.environment}"
-    image       = "${var.container_image}:latest"
+    image       = "${var.aws_ecr_repository_url}:latest"
     essential   = true
     environment = var.container_environment
     portMappings = [{

@@ -13,5 +13,5 @@ COPY . /app/
 ########################
 FROM base AS app
 
-EXPOSE 3001
+EXPOSE 8000
 CMD ["yarn", "start"]

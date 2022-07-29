@@ -18,6 +18,7 @@ resource "aws_internet_gateway" "main" {
   }
 }
 
+# For the private subnets, we need to attach NAT gateways for communication with the outside world, which also need an ElasticIP associated:
 resource "aws_nat_gateway" "main" {
   count         = length(var.private_subnets)
   allocation_id = element(aws_eip.nat.*.id, count.index)

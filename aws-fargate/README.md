@@ -29,10 +29,26 @@ This setup creates the following resources:
 
 - Execute `terraform init`, it will initialize your local terraform and connect it to the state store, and it will download all the necessary providers
 
-- Execute `terraform plan -var-file="secret.tfvars" -var-file="environment.tfvars" -out="out.plan"` - this will calculate the changes terraform has to apply and creates a plan. If there are changes, you will see them. Check if any of the changes are expected, especially deletion of infrastructure.
+- Execute `terraform plan -var-file="secrets.tfvars" -var-file="environment.tfvars" -out="out.plan"` - this will calculate the changes terraform has to apply and creates a plan. If there are changes, you will see them. Check if any of the changes are expected, especially deletion of infrastructure.
 
 - If everything looks good, you can execute the changes with `terraform apply out.plan`
 
 
 In case you no longer want this architecture to run. Run (carefully) the command `terraform destroy`
 
+
+Finally, make sure to push your Docker image to the ECR. You can automate such process for example using Github Actions. Use the following command to do it mannually:
+
+```bash
+// Build your image
+$ docker build -t terraform-demo --target=app .
+
+// Login into AWS
+$ aws ecr get-login-password --region <region> | docker login --username AWS --password-stdin "<aws-account-id>.dkr.ecr.<region>.amazonaws.com"
+
+// Tag the image
+$ docker tag terraform-demo:latest <repo-url>:latest
+
+// Push the image
+$ docker push <repo_url>:latest
+```

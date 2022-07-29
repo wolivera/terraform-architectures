@@ -6,7 +6,7 @@
 
 resource "aws_secretsmanager_secret" "application_secrets" {
   count = length(var.application_secrets)
-  name  = "${var.name}-application-secrets-${var.environment}-${element(keys(var.application_secrets), count.index)}"
+  name  = "${var.name}-application_secrets-${var.environment}-${element(keys(var.application_secrets), count.index)}"
 }
 
 
@@ -17,7 +17,7 @@ resource "aws_secretsmanager_secret_version" "application_secrets_values" {
 }
 
 locals {
-  secrets = zipmap(keys(var.application_secrets), aws_secretsmanager_secret_version.solaris_broker_application_secrets_values.*.arn)
+  secrets = zipmap(keys(var.application_secrets), aws_secretsmanager_secret_version.application_secrets_values.*.arn)
 
   secretMap = [for secretKey in keys(var.application_secrets) : {
     name      = secretKey
@@ -28,7 +28,7 @@ locals {
 }
 
 output "application_secrets_arn" {
-  value = aws_secretsmanager_secret_version.solaris_broker_application_secrets_values.*.arn
+  value = aws_secretsmanager_secret_version.application_secrets_values.*.arn
 }
 
 output "secrets_map" {

@@ -30,8 +30,8 @@ variable "container_memory" {
   description = "The amount (in MiB) of memory used by the task"
 }
 
-variable "container_image" {
-  description = "Docker image to be launched"
+variable "aws_ecr_repository_url" {
+  description = "The ECR repository url"
 }
 
 variable "aws_alb_target_group_arn" {
