@@ -36,8 +36,9 @@ This setup creates the following resources:
 
 In case you no longer want this architecture to run. Run (carefully) the command `terraform destroy`
 
+### Test
 
-Finally, make sure to push your Docker image to the ECR. You can automate such process for example using Github Actions. Use the following command to do it mannually:
+This setup comes with a basic Node app and a Dockerfile so you can see everything running. Try to build and push the Docker image to the created ECR. Use the following commands:
 
 ```bash
 // Build your image
@@ -52,3 +53,5 @@ $ docker tag terraform-demo:latest <repo-url>:latest
 // Push the image
 $ docker push <repo_url>:latest
 ```
+
+You can automate these commands for example using Github Actions.
