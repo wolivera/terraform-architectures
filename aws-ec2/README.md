@@ -7,10 +7,12 @@ This terraform setup can be used to setup a server, aka EC2 instance on AWS infr
 This setup creates the following resources:
 
 - VPC
-- One public and one private subnet
+- One public subnet
 - Routing tables for the subnets
-- One security groups that allows HTTP access on port 80
+- One security groups that allows HTTP access on port 8080 and 22
+- EC2 instance into the subnet with ssh access for a defined key pair name
 
+![example](https://miro.medium.com/max/1400/1*KQ5UcHc3qtL0cqiOinR3iQ.png)
 
 ### Usage
 
