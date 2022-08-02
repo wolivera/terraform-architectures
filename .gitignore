@@ -4,5 +4,6 @@ terraform.tfstate
 terraform.tfstate.backup
 secrets.tfvars
 environment.tfvars
+out.plan
 
 node_modules
