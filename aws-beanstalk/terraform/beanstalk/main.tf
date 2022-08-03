@@ -1,6 +1,5 @@
 data "aws_elastic_beanstalk_hosted_zone" "current" {}
 
-
 resource "aws_elastic_beanstalk_application" "elasticapp" {
   name = var.application_name
 }
@@ -13,13 +12,15 @@ data "aws_elastic_beanstalk_solution_stack" "nodejs" {
 
 
 resource "aws_elastic_beanstalk_environment" "beanstalkappenv" {
-  name                = "${var.app_tags}-Api"
+  name                = "${var.application_name}-${var.environment}-env"
   application         = var.application_name
   solution_stack_name = data.aws_elastic_beanstalk_solution_stack.nodejs.name
   tier                = "WebServer"
   tags = {
     APP_NAME = var.app_tags
   }
+
+  depends_on = [var.vpc_id]
 
   setting {
     namespace = "aws:ec2:vpc"
@@ -54,7 +55,7 @@ resource "aws_elastic_beanstalk_environment" "beanstalkappenv" {
   setting {
     namespace = "aws:ec2:vpc"
     name      = "Subnets"
-    value     = var.ec2_subnets
+    value     =  "${join(",", var.ec2_subnets)}"
   }
 
   setting {
@@ -102,12 +103,6 @@ resource "aws_elastic_beanstalk_environment" "beanstalkappenv" {
     value     = 125
   }
 
-  # setting {
-  #   namespace = "aws:autoscaling:launchconfiguration"
-  #   name      = "SSHSourceRestriction"
-  #   value     = "tcp, 22, 22, ${var.sshrestrict}"
-  # }
-
   setting {
     namespace = "aws:ec2:vpc"
     name      = "ELBScheme"
@@ -123,7 +118,7 @@ resource "aws_elastic_beanstalk_environment" "beanstalkappenv" {
   setting {
     namespace = "aws:autoscaling:asg"
     name      = "MaxSize"
-    value     = 1
+    value     = 2
   }
   setting {
     namespace = "aws:elasticbeanstalk:healthreporting:system"

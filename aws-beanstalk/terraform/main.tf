@@ -4,6 +4,7 @@ provider "aws" {
   access_key = var.aws_access_key
   secret_key = var.aws_secret_key
   region     = var.aws_region
+  profile    = "default"
 }
 
 module "vpc" {
@@ -16,15 +17,6 @@ module "vpc" {
   environment        = var.environment
 }
 
-module "ssl" {
-
-  source = "./ssl/"
-
-  domain_name = var.domain_name
-  cname       = module.eb.cname
-  zone        = module.eb.zone
-}
-
 module "eb" {
 
   source = "./beanstalk/"
@@ -32,14 +24,14 @@ module "eb" {
 
   app_tags         = var.app_tags
   application_name = var.application_name
-  vpc_id           = var.vpc_id
-  ec2_subnets      = var.ec2_subnets
-  elb_subnets      = var.elb_subnets
+  environment      = var.environment
+  vpc_id           = module.vpc.id
+  ec2_subnets      = module.vpc.vpc_private_subnets
+  elb_subnets      = module.vpc.vpc_public_subnets
   instance_type    = var.instance_type
   disk_size        = var.disk_size
   keypair          = var.keypair
-  # sshrestrict      = var.sshrestrict
-  certificate = module.ssl.certificate
+  certificate      = var.tsl_certificate_arn
 }
 
 # module "cloudwatch" {

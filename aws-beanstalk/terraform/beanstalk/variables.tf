@@ -6,16 +6,20 @@ variable "application_name" {
   type = string
 }
 
+variable "environment" {
+  description = "the name of your environment, e.g. \"prod\""
+}
+
 variable "vpc_id" {
   type = string
 }
 
 variable "ec2_subnets" {
-  type = string
+  description = "the private subnets for your environment, e.g. \"subnet-12345678,subnet-87654321\""
 }
 
 variable "elb_subnets" {
-  type = list(string)
+  description = "the public subnets for your environment, e.g. \"subnet-12345678,subnet-87654321\""
 }
 
 variable "instance_type" {
@@ -33,7 +37,3 @@ variable "keypair" {
 variable "certificate" {
   type = string
 }
-
-# variable "sshrestrict" {
-#   type = string
-# }
