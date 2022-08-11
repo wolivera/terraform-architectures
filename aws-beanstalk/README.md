@@ -1,22 +1,26 @@
 # Terraform Architectures: AWS Elastic Beanstalk
 
-This terraform setup can be used to setup an Elastic Beanstalk stack on AWS infrastructure. This setup is recommended for standard up to medium-size applications that need 
+This terraform setup can be used to setup an Elastic Beanstalk stack on AWS infrastructure. This setup is recommended for standard up to medium-size applications that need an scalable setup that combines https, a load balancer and application versions. EB provides also the ability to easily spin up additional environments. Github actions can also be integrated in order to have a CI/CD flow.
 
 ## Resources
 
 This setup creates the following resources:
 
-- VPC
-- One public subnet
-- Routing tables for the subnets
-- One security groups that allows HTTP access on port 8080 and 22
-- EC2 instance into the subnet with ssh access for a defined key pair name
+- VPC with 2 availability zones (configurable)
+- One public subnet per AZ for the Elastic Load Balancer
+- One private subnet per AZ for the EC2 instances
+- A route table, NAT gateway and IP Elastic Address for the communication with the outside world of the EC2 instance
+- Cloudwatch log groups for the running application
+- EC2 instance
+- An Elastic Load Balancer
+- An Elastic Beanstalk application
+- An Elastic Beanstalk environment
 
-![example](https://miro.medium.com/max/1400/1*KQ5UcHc3qtL0cqiOinR3iQ.png)
+<img width="951" alt="image" src="https://user-images.githubusercontent.com/4985062/184236488-ecb94c6a-6dc5-4c05-9d6e-cc07de90ee80.png">
 
 ### Usage
 
-- Create your own `secrets.tfvars` based on `secrets.example.tfvars`, insert the values for your AWS access key and secrets. If you don't create your `secrets.tfvars`, don't worry. Terraform will interactively prompt you for missing variables later on. Also create your `environment.tfvars` file to manage non-secret values for different environments or projects with the same infrastructure
+- Create your own `secrets.tfvars` based on `secrets.example.tfvars`, insert the values for your AWS access key and secrets. If you don't create your `secrets.tfvars`, don't worry, Terraform will interactively prompt you for missing variables later on. Also create your `environment.tfvars` file to manage non-secret values for different environments or projects with the same infrastructure
 
 - Execute `terraform init`, it will initialize your local terraform and connect it to the state store, and it will download all the necessary providers
 
@@ -27,24 +31,9 @@ This setup creates the following resources:
 
 In case you no longer want this architecture to run. Run (carefully) the command `terraform destroy`
 
-You can automate these commands for example using Github Actions.
-
 
 ### Test
 
-The easiest setup to try out this infrastructure is to run a basic node app into the EC2 instance. In order to do so, we will manually copy the necessary files into the remote server and simply start the app. 
-Follow below steps:
+This example already comes with a sample NodeJs application as part of the Beanstalk stack. If terraform deployment is successfull you should be able to find your application at the generated Beanstalk url. You can then assign a Route53 entry to map your custom domain/certificate with this URL.
 
-1. The configuration has created an ec2 instance in a public subnet with open access for ssh connection. This setup assumes you have set a Key Pair name that you have access to. So login into the instance
 
-```sh
-$ ssh -i <yourkey>.pem ec2-user@<instance-ip>
-```
-
-1. Once in, `clone` this repository and step into the `aws-ec2` folder
-
-1. Install `node` and `npm` in the system and then run `npm install` command
-
-1. Simply run the node app using `npm start`. This will start the server in the `8080` port (which matches the security group ingress configuration)
-
-1. Test you can access the app by pasting into a browser `<public-ip-address>:8080`
