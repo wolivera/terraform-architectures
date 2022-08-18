@@ -34,23 +34,14 @@ module "eb" {
   certificate      = var.tsl_certificate_arn
 }
 
-module "sns" {
+# module "cloudwatch" {
 
-  source = "./sns/"
-
-  application_name = var.application_name
-  environment      = var.environment
-}
+#   source = "./cloudwatch/"
 
 
-module "cloudwatch" {
-
-  source = "./cloudwatch/"
-
-  application_name = var.application_name
-  environment      = var.environment
-  app_tags         = var.app_tags
-  alarm_sns_topic  = module.sns.alarm_sns_topic
-  asg_name         = module.eb.asg_name
-  lbarn            = module.eb.lb_arn
-}
+#   app_tags        = var.app_tags
+#   alarm_sns_topic = var.alarm_sns_topic
+#   asgName         = module.eb.asg_name
+#   envName         = module.eb.env_name
+#   lbarn           = module.eb.lb_arn
+# }

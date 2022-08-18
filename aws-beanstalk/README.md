@@ -15,6 +15,7 @@ This setup creates the following resources:
 - An Elastic Load Balancer
 - An Elastic Beanstalk application
 - An Elastic Beanstalk environment
+- Cloudwatch alarms for API metrics with SNS topic
 
 <img width="951" alt="image" src="https://user-images.githubusercontent.com/4985062/184236488-ecb94c6a-6dc5-4c05-9d6e-cc07de90ee80.png">
 
