@@ -4,17 +4,17 @@ resource "aws_elastic_beanstalk_application" "elasticapp" {
   name = var.application_name
 }
 
-data "aws_elastic_beanstalk_solution_stack" "nodejs" {
+data "aws_elastic_beanstalk_solution_stack" "docker" {
   most_recent = true
 
-  name_regex = "^64bit Amazon Linux (.*) running Node.js 16$"
+  name_regex = "^64bit Amazon Linux (.*) running Docker$"
 }
 
 
 resource "aws_elastic_beanstalk_environment" "beanstalkappenv" {
   name                = "${var.application_name}-${var.environment}-env"
   application         = var.application_name
-  solution_stack_name = data.aws_elastic_beanstalk_solution_stack.nodejs.name
+  solution_stack_name = data.aws_elastic_beanstalk_solution_stack.docker.name
   tier                = "WebServer"
   tags = {
     APP_NAME = var.app_tags

@@ -34,14 +34,58 @@ module "eb" {
   certificate      = var.tsl_certificate_arn
 }
 
-# module "cloudwatch" {
+module "sns" {
 
-#   source = "./cloudwatch/"
+  source = "./sns/"
+
+  application_name = var.application_name
+  environment      = var.environment
+}
 
 
-#   app_tags        = var.app_tags
-#   alarm_sns_topic = var.alarm_sns_topic
-#   asgName         = module.eb.asg_name
-#   envName         = module.eb.env_name
-#   lbarn           = module.eb.lb_arn
+module "cloudwatch" {
+
+  source = "./cloudwatch/"
+
+  application_name = var.application_name
+  environment      = var.environment
+  app_tags         = var.app_tags
+  alarm_sns_topic  = module.sns.alarm_sns_topic
+  asg_name         = module.eb.asg_name
+  lbarn            = module.eb.lb_arn
+}
+
+module "rds" {
+
+  source = "./rds"
+
+  application_name = var.application_name
+  environment      = var.environment
+  app_tags         = var.app_tags
+  db_subnets       = module.vpc.vpc_private_subnets
+  vpc_id           = module.vpc.id
+  cidr             = var.cidr
+}
+
+module "ecr" {
+  source      = "./ecr"
+  name        = var.application_name
+  environment = var.environment
+}
+
+#
+#
+## Uncomment below lines and switch with rds in case you're looking for a MongoDB instance
+#
+#
+# module "documentdb" {
+
+#   source = "./documentdb"
+
+#   application_name = var.application_name
+#   environment      = var.environment
+#   app_tags         = var.app_tags
+#   db_subnets       = module.vpc.vpc_private_subnets
+#   vpc_id           = module.vpc.id
+#   cidr             = var.cidr
 # }
