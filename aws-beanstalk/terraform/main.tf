@@ -54,3 +54,15 @@ module "cloudwatch" {
   asg_name         = module.eb.asg_name
   lbarn            = module.eb.lb_arn
 }
+
+module "rds" {
+
+  source = "./rds"
+
+  application_name = var.application_name
+  environment      = var.environment
+  app_tags         = var.app_tags
+  db_subnets       = module.vpc.vpc_private_subnets
+  vpc_id           = module.vpc.id
+  cidr             = var.cidr
+}
