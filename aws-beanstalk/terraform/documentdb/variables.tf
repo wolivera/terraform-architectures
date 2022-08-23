@@ -22,11 +22,11 @@ variable "cidr" {
   description = "The CIDR block for the VPC."
 }
 
-variable "postgres_instance_class" {
+variable "docdb_instance_class" {
   default = "db.t3.medium"
 }
 
-# variable "postgres_password" {
-#   type = string
-#   default = "password"
-# }
+variable "docdb_password" {
+  type = string
+  default = "password"
+}

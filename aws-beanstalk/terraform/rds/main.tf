@@ -37,7 +37,7 @@ module "db" {
 
   engine            = "postgres"
   engine_version    = "14.1"
-  instance_class    = "db.t3.medium"
+  instance_class    = var.postgres_instance_class
   allocated_storage = 20
 
   db_name                = "postgres"

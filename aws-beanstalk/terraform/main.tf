@@ -66,3 +66,20 @@ module "rds" {
   vpc_id           = module.vpc.id
   cidr             = var.cidr
 }
+
+#
+#
+## Uncomment below lines and switch with rds in case you're looking for a MongoDB instance
+#
+#
+module "documentdb" {
+
+  source = "./documentdb"
+
+  application_name = var.application_name
+  environment      = var.environment
+  app_tags         = var.app_tags
+  db_subnets       = module.vpc.vpc_private_subnets
+  vpc_id           = module.vpc.id
+  cidr             = var.cidr
+}
