@@ -1,0 +1,5 @@
+app_tags = "Terraform Demo"
+application_name = "terraform-demo"
+environment = "dev"
+aws_acm_certificate_arn = "certificatearn"
+
