@@ -12,7 +12,10 @@ This setup creates the following resources:
 - One security groups that allows HTTP access on port 8080 and 22
 - EC2 instance into the subnet with ssh access for a defined key pair name
 
-![example](https://miro.medium.com/max/1400/1*KQ5UcHc3qtL0cqiOinR3iQ.png)
+<p align="center">
+  <img width="868" alt="image" src="https://user-images.githubusercontent.com/4985062/186518171-5975f450-37e3-488f-bc68-1c7a97ca3254.png">
+</p>
+
 
 ### Usage
 
