@@ -11,15 +11,15 @@ This setup creates the following resources:
 - One private subnet per AZ for the EC2 instances
 - A route table, NAT gateway and IP Elastic Address for the communication with the outside world of the EC2 instance
 - Cloudwatch log groups for the running application
-- EC2 instance
+- EC2 instance running Docker containers
 - An Elastic Load Balancer
-- An Elastic Beanstalk application
+- An Elastic Beanstalk application running Docker
 - An Elastic Beanstalk environment
 - Cloudwatch alarms for API metrics with SNS topic
 - An RDS Instance with PostgreSQL 
 - A DocumentDB with MongoDB
 
-
+<img width="994" alt="image" src="https://user-images.githubusercontent.com/4985062/186966905-7eedd32c-5b47-4de4-b07c-d0d092c030b4.png">
 
 
 ### Usage
@@ -38,6 +38,6 @@ In case you no longer want this architecture to run. Run (carefully) the command
 
 ### Test
 
-This example already comes with a sample NodeJs application as part of the Beanstalk stack. If terraform deployment is successfull you should be able to find your application at the generated Beanstalk url. You can then assign a Route53 entry to map your custom domain/certificate with this URL.
+This example already comes with a sample Docker application as part of the Beanstalk stack. If terraform deployment is successfull you should be able to find your application at the generated Beanstalk url. You can then assign a Route53 entry to map your custom domain/certificate with this URL.
 
 
