@@ -89,3 +89,22 @@ module "ecr" {
 #   vpc_id           = module.vpc.id
 #   cidr             = var.cidr
 # }
+
+
+
+data "aws_route53_zone" "hosted_zone" {
+  name = var.domain_name
+}
+
+# creating A record for domain:
+resource "aws_route53_record" "websiteurl" {
+  name    = var.website_domain
+  zone_id = data.aws_route53_zone.hosted_zone.zone_id
+  type    = "A"
+
+  alias {
+    name    = "${module.eb.cname}"
+    zone_id = "${module.eb.zone}"
+    evaluate_target_health = true
+  }
+}

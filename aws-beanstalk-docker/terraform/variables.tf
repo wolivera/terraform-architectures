@@ -62,6 +62,18 @@ variable "tsl_certificate_arn" {
   description = "The ARN of the certificate that the ALB uses for https"
 }
 
+variable "domain_name" {
+  type        = string
+  description = "The domain name to use"
+  default     = "zircondev.com"
+}
+
+variable "website_domain" {
+  type        = string
+  description = "The domain name to use"
+  default     = "terraform-beanstalk-docker-dev.zircondev.com"
+}
+
 # variable "sshrestrict" {
 #   type = string
 # }
