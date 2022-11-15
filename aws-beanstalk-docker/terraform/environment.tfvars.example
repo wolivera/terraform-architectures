@@ -4,3 +4,7 @@ instance_type = "t2.micro"
 disk_size = "20"
 keypair = "test-kp"
 tsl_certificate_arn = "arn:aws:acm:us-east-1:accountid:certificate/id"
+domain_name="zircondev.com"
+website_domain="terraform-demo.zircondev.com"
+environment="dev"
+

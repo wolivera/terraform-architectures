@@ -23,10 +23,10 @@ variable "cidr" {
 }
 
 variable "postgres_instance_class" {
-  default = "db.t3.medium"
+  default = "db.t3.micro"
 }
 
-# variable "postgres_password" {
-#   type = string
-#   default = "password"
-# }
+variable "postgres_password" {
+  type = string
+  default = "Pa$$word"
+}

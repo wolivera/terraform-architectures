@@ -65,13 +65,17 @@ variable "tsl_certificate_arn" {
 variable "domain_name" {
   type        = string
   description = "The domain name to use"
-  default     = "zircondev.com"
+  # default     = "zircondev.com"
 }
 
 variable "website_domain" {
   type        = string
   description = "The domain name to use"
-  default     = "terraform-beanstalk-docker-dev.zircondev.com"
+  # default     = "terraform-beanstalk-docker-dev.zircondev.com"
+}
+
+variable "postgres_password" {
+  type = string
 }
 
 # variable "sshrestrict" {

@@ -43,7 +43,7 @@ module "db" {
   db_name                = "postgres"
   username               = "postgres"
   create_random_password = false
-  password               = "password" # change to something stronger
+  password               = "${var.postgres_password}" # change to something stronger
   port                   = 5432
 
   iam_database_authentication_enabled = true

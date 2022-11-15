@@ -120,16 +120,11 @@ resource "aws_elastic_beanstalk_environment" "beanstalkappenv" {
     name      = "MaxSize"
     value     = 2
   }
-  setting {
-    namespace = "aws:elasticbeanstalk:healthreporting:system"
-    name      = "SystemType"
-    value     = "enhanced"
-  }
 
   setting {
     namespace = "aws:autoscaling:updatepolicy:rollingupdate"
     name      = "RollingUpdateEnabled"
-    value     = true
+    value     = false
   }
 
   setting {
@@ -147,7 +142,7 @@ resource "aws_elastic_beanstalk_environment" "beanstalkappenv" {
   setting {
     namespace = "aws:elasticbeanstalk:command"
     name      = "DeploymentPolicy"
-    value     = "RollingWithAdditionalBatch"
+    value     = "AllAtOnce"
   }
 
   setting {
@@ -165,7 +160,7 @@ resource "aws_elastic_beanstalk_environment" "beanstalkappenv" {
   setting {
     namespace = "aws:elasticbeanstalk:command"
     name      = "BatchSize"
-    value     = 30
+    value     = 100
   }
 
   ###=========================== Logging ========================== ###
